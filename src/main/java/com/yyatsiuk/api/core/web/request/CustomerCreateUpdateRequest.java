@@ -7,7 +7,7 @@ import javax.validation.constraints.NotBlank;
 
 @Getter
 @Setter
-public class CustomerCreateRequest {
+public class CustomerCreateUpdateRequest {
 
     @NotBlank(message = "Full name cannot be null or empty")
     private String fullName;
