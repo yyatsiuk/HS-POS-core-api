@@ -1,9 +1,14 @@
 package com.yyatsiuk.api.core.web.request;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
 public class CustomerUpdateRequest {
 
     @NotBlank(message = "Full name cannot be null or empty")

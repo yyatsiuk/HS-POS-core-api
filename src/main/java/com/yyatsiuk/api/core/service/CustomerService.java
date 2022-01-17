@@ -14,4 +14,6 @@ public interface CustomerService {
 
     List<CustomerDto> getAll();
 
+    void delete(Long id);
+
 }

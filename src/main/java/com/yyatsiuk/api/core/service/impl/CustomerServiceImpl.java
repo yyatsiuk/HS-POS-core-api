@@ -52,4 +52,9 @@ public class CustomerServiceImpl implements CustomerService {
         return customers.stream().map(customerMapper::fromEntityToDto).toList();
     }
 
+    @Override
+    public void delete(Long id) {
+        customerRepository.deleteById(id);
+    }
+
 }
