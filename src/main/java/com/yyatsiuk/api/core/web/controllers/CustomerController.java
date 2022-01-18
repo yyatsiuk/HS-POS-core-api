@@ -1,4 +1,4 @@
-package com.yyatsiuk.api.core.web;
+package com.yyatsiuk.api.core.web.controllers;
 
 import com.yyatsiuk.api.core.dto.CustomerDto;
 import com.yyatsiuk.api.core.mappers.CustomerMapper;
