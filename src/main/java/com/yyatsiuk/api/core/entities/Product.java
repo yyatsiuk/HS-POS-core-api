@@ -38,6 +38,9 @@ public class Product {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "description")
+    private String description;
+
     @Column(name = "price")
     private BigDecimal price;
 
@@ -50,7 +53,6 @@ public class Product {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-
 
     @ManyToOne(cascade = {CascadeType.PERSIST})
     @JoinColumn(name = "category_id")
