@@ -14,6 +14,8 @@ public interface ProductService {
 
     List<ProductDto> getAll();
 
+    List<String> getAllCategories();
+
     void delete(Long id);
 
 }

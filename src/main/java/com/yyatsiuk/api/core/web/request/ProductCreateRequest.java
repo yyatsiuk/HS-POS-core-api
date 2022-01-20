@@ -16,7 +16,6 @@ public class ProductCreateRequest {
     @NotBlank(message = "Product name must not be null")
     private String name;
 
-    @NotBlank(message = "Product description must not be null or empty")
     private String description;
 
     @NotBlank(message = "Image url must not be null or empty")

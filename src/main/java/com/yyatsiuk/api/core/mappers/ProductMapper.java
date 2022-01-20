@@ -12,7 +12,7 @@ public interface ProductMapper {
     @Mapping(target = "category", expression = "java(entity.getCategory().getName())")
     ProductDto fromEntityToDto(Product entity);
 
-    @Mapping(target = "category", expression = "java(new com.yyatsiuk.api.core.entities.ProductCategory(dto.getCategory()))")
+    @Mapping(target = "category", ignore = true)
     Product fromDtoToEntity(ProductDto dto);
 
     ProductDto fromCreateRequestToDto(ProductCreateRequest request);

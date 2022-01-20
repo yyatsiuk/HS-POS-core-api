@@ -20,15 +20,11 @@ import java.util.List;
 @Table(name = "category")
 public class ProductCategory {
 
-    public ProductCategory(String name) {
-        this.name = name;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", unique = true)
     private String name;
 
     @OneToMany(mappedBy = "category")
