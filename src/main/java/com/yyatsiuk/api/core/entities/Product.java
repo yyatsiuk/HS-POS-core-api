@@ -46,7 +46,7 @@ public class Product {
 
     @Column(name = "product_status")
     @Enumerated(EnumType.STRING)
-    private ProductStatus productStatus;
+    private ProductStatus status;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -56,7 +56,7 @@ public class Product {
 
     @ManyToOne(cascade = {CascadeType.PERSIST})
     @JoinColumn(name = "category_id")
-    private ProductCategory productCategory;
+    private ProductCategory category;
 
     @PrePersist
     private void prePersist() {

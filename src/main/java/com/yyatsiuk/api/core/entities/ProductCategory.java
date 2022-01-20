@@ -1,6 +1,7 @@
 package com.yyatsiuk.api.core.entities;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Column;
@@ -15,8 +16,13 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
 @Table(name = "category")
 public class ProductCategory {
+
+    public ProductCategory(String name) {
+        this.name = name;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +31,7 @@ public class ProductCategory {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "productCategory")
+    @OneToMany(mappedBy = "category")
     private List<Product> products;
 
 }

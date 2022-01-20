@@ -2,7 +2,7 @@ package com.yyatsiuk.api.core.web.controllers;
 
 import com.yyatsiuk.api.core.enumerations.ImageType;
 import com.yyatsiuk.api.core.service.S3Service;
-import lombok.extern.slf4j.Slf4j;
+import com.yyatsiuk.api.core.web.response.ImageResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.net.URI;
 
-@Slf4j
 @RestController
 @RequestMapping("/api/images")
 @CrossOrigin("*")
@@ -36,14 +34,14 @@ public class ImageController {
     }
 
     @PostMapping(path = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Void> saveImage(@RequestPart MultipartFile image,
-                                          @RequestParam ImageType type) throws IOException {
+    public ResponseEntity<ImageResponse> saveImage(@RequestPart MultipartFile image,
+                                                   @RequestParam ImageType type) throws IOException {
 
         byte[] imageBytes = image.getBytes();
         String key = generateS3Key(image.getOriginalFilename(), type);
         String fileUrl = s3Service.saveObject(imageBytes, key);
 
-        return ResponseEntity.created(URI.create(fileUrl)).build();
+        return ResponseEntity.ok(new ImageResponse(fileUrl));
     }
 
     private String generateS3Key(String fileName, ImageType type) {

@@ -27,6 +27,7 @@ public class S3ServiceImpl implements S3Service {
                 .key(key)
                 .build();
 
+        log.info("Uploading image: {} to the s3 bucket", key);
         s3Client.putObject(putObjectRequest, RequestBody.fromBytes(data));
         return s3Client.utilities().getUrl(
                 GetUrlRequest.builder().bucket(bucketName).key(key).build()).toString();
