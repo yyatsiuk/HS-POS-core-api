@@ -1,6 +1,7 @@
 package com.yyatsiuk.api.core.web.controllers;
 
 import com.yyatsiuk.api.core.enumerations.ImageType;
+import com.yyatsiuk.api.core.image.ThumbnailGenerator;
 import com.yyatsiuk.api.core.service.S3Service;
 import com.yyatsiuk.api.core.web.response.ImageResponse;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,9 +38,9 @@ public class ImageController {
     public ResponseEntity<ImageResponse> saveImage(@RequestPart MultipartFile image,
                                                    @RequestParam ImageType type) throws IOException {
 
-        byte[] imageBytes = image.getBytes();
+        byte[] resizeImage = ThumbnailGenerator.resizeImage(image.getInputStream(), 0.4, 0.8);
         String key = generateS3Key(image.getOriginalFilename(), type);
-        String fileUrl = s3Service.saveObject(imageBytes, key);
+        String fileUrl = s3Service.saveObject(resizeImage, key);
 
         return ResponseEntity.ok(new ImageResponse(fileUrl));
     }
