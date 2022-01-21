@@ -3,6 +3,7 @@ package com.yyatsiuk.api.core.service.impl;
 import com.yyatsiuk.api.core.dto.ProductDto;
 import com.yyatsiuk.api.core.entities.Product;
 import com.yyatsiuk.api.core.entities.ProductCategory;
+import com.yyatsiuk.api.core.exceptions.EntityNotFoundException;
 import com.yyatsiuk.api.core.mappers.ProductMapper;
 import com.yyatsiuk.api.core.repository.ProductCategoryRepository;
 import com.yyatsiuk.api.core.repository.ProductRepository;
@@ -43,12 +44,20 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDto update(ProductDto productDto) {
-        return null;
+        Assert.notNull(productDto, NULL_PRODUCT_ERROR_MESSAGE);
+
+        Product product = productMapper.fromDtoToEntity(productDto);
+        productCategoryRepository.findByName(productDto.getCategory()).ifPresent(product::setCategory);
+        Product productUpdated = productRepository.save(product);
+
+        return productMapper.fromEntityToDto(productUpdated);
     }
 
     @Override
     public ProductDto findById(Long id) {
-        return null;
+        return productRepository.findById(id)
+                .map(productMapper::fromEntityToDto)
+                .orElseThrow(() -> new EntityNotFoundException("Product with id: {0} not found", id));
     }
 
     @Override
@@ -70,6 +79,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void delete(Long id) {
-
+        productRepository.deleteById(id);
     }
+
 }

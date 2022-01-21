@@ -4,12 +4,14 @@ import com.yyatsiuk.api.core.dto.ProductDto;
 import com.yyatsiuk.api.core.mappers.ProductMapper;
 import com.yyatsiuk.api.core.service.ProductService;
 import com.yyatsiuk.api.core.web.request.ProductCreateRequest;
+import com.yyatsiuk.api.core.web.request.ProductUpdateRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,10 +46,22 @@ public class ProductController {
                 .build();
     }
 
-    @Transactional(readOnly = true)
+    @PutMapping("/{id}")
+    public ResponseEntity<ProductDto> updateProduct(@RequestBody @Valid ProductUpdateRequest payload, @PathVariable Long id) {
+        ProductDto productDto = productMapper.fromUpdateRequestToDto(payload, id);
+        ProductDto updatedProduct = productService.update(productDto);
+
+        return ResponseEntity.ok(updatedProduct);
+    }
+
     @GetMapping
     public ResponseEntity<List<ProductDto>> getAllProducts() {
         return ResponseEntity.ok(productService.getAll());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductDto> getProductById(@PathVariable Long id) {
+        return ResponseEntity.ok(productService.findById(id));
     }
 
     @GetMapping("/categories")

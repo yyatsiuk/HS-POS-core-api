@@ -3,6 +3,7 @@ package com.yyatsiuk.api.core.mappers;
 import com.yyatsiuk.api.core.dto.ProductDto;
 import com.yyatsiuk.api.core.entities.Product;
 import com.yyatsiuk.api.core.web.request.ProductCreateRequest;
+import com.yyatsiuk.api.core.web.request.ProductUpdateRequest;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -16,5 +17,7 @@ public interface ProductMapper {
     Product fromDtoToEntity(ProductDto dto);
 
     ProductDto fromCreateRequestToDto(ProductCreateRequest request);
+
+    ProductDto fromUpdateRequestToDto(ProductUpdateRequest request, Long id);
 
 }
