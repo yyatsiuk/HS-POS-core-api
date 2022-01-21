@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 public class ProductDto {
 
     private Long id;
+    private String code;
     private String imageUrl;
     private String name;
     private String description;

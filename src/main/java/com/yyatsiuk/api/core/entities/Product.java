@@ -28,9 +28,14 @@ import java.util.Objects;
 @Table(name = "products")
 public class Product {
 
+    public static final int CODE_LENGTH = 10;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "code", unique = true, length = CODE_LENGTH)
+    private String code;
 
     @Column(name = "image_url")
     private String imageUrl;
@@ -38,7 +43,7 @@ public class Product {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "description")
+    @Column(name = "description", length = 500)
     private String description;
 
     @Column(name = "price")

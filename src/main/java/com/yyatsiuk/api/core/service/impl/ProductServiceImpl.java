@@ -15,6 +15,9 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.yyatsiuk.api.core.entities.Product.CODE_LENGTH;
+import static com.yyatsiuk.api.core.utils.hash.CodeGenerator.generateRandomCode;
+
 @Service
 public class ProductServiceImpl implements ProductService {
 
@@ -38,6 +41,7 @@ public class ProductServiceImpl implements ProductService {
         Assert.notNull(productDto, NULL_PRODUCT_ERROR_MESSAGE);
 
         Product product = productMapper.fromDtoToEntity(productDto);
+        product.setCode(generateRandomCode(productDto.getName(), CODE_LENGTH));
         productCategoryRepository.findByName(productDto.getCategory()).ifPresent(product::setCategory);
         return productRepository.save(product).getId();
     }

@@ -18,6 +18,10 @@ public class ProductUpdateRequest {
     @JsonProperty("name")
     private String name;
 
+    @JsonProperty("code")
+    @NotBlank(message = "Product name must not be null")
+    private String code;
+
     @JsonProperty("description")
     private String description;
 
