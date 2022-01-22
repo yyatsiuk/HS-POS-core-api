@@ -1,9 +1,9 @@
-package com.yyatsiuk.api.core.mappers;
+package com.yyatsiuk.api.core.models.mappers;
 
-import com.yyatsiuk.api.core.dto.CustomerDto;
-import com.yyatsiuk.api.core.entities.Customer;
-import com.yyatsiuk.api.core.web.request.CustomerCreateRequest;
-import com.yyatsiuk.api.core.web.request.CustomerUpdateRequest;
+import com.yyatsiuk.api.core.models.dto.CustomerDto;
+import com.yyatsiuk.api.core.models.entities.Customer;
+import com.yyatsiuk.api.core.models.request.CustomerCreateRequest;
+import com.yyatsiuk.api.core.models.request.CustomerUpdateRequest;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

@@ -1,10 +1,10 @@
 package com.yyatsiuk.api.core.web.controllers;
 
-import com.yyatsiuk.api.core.dto.CustomerDto;
-import com.yyatsiuk.api.core.mappers.CustomerMapper;
+import com.yyatsiuk.api.core.models.dto.CustomerDto;
+import com.yyatsiuk.api.core.models.mappers.CustomerMapper;
 import com.yyatsiuk.api.core.service.CustomerService;
-import com.yyatsiuk.api.core.web.request.CustomerCreateRequest;
-import com.yyatsiuk.api.core.web.request.CustomerUpdateRequest;
+import com.yyatsiuk.api.core.models.request.CustomerCreateRequest;
+import com.yyatsiuk.api.core.models.request.CustomerUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;

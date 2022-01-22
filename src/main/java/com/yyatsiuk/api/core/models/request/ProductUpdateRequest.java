@@ -1,4 +1,4 @@
-package com.yyatsiuk.api.core.web.request;
+package com.yyatsiuk.api.core.models.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yyatsiuk.api.core.enumerations.ProductStatus;
@@ -8,14 +8,19 @@ import lombok.Setter;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class ProductCreateRequest {
+public class ProductUpdateRequest {
 
     @NotBlank(message = "Product name must not be null")
     @JsonProperty("name")
     private String name;
+
+    @JsonProperty("code")
+    @NotBlank(message = "Product name must not be null")
+    private String code;
 
     @JsonProperty("description")
     private String description;
@@ -35,5 +40,9 @@ public class ProductCreateRequest {
     @NotBlank(message = "Product category must not be null or empty")
     @JsonProperty("category")
     private String category;
+
+    @NotNull(message = "Creation date cannot be null")
+    @JsonProperty("createdAt")
+    private LocalDateTime createdAt;
 
 }

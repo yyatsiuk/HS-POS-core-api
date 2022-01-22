@@ -1,4 +1,4 @@
-package com.yyatsiuk.api.core.entities;
+package com.yyatsiuk.api.core.models.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

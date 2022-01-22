@@ -1,4 +1,4 @@
-package com.yyatsiuk.api.core.web.response;
+package com.yyatsiuk.api.core.models.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,6 +1,6 @@
 package com.yyatsiuk.api.core.repository;
 
-import com.yyatsiuk.api.core.entities.Product;
+import com.yyatsiuk.api.core.models.entities.Product;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

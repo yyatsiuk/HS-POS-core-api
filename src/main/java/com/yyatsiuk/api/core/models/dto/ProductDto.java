@@ -1,4 +1,4 @@
-package com.yyatsiuk.api.core.dto;
+package com.yyatsiuk.api.core.models.dto;
 
 import com.yyatsiuk.api.core.enumerations.ProductStatus;
 import lombok.AllArgsConstructor;

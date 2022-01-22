@@ -1,6 +1,6 @@
 package com.yyatsiuk.api.core.service;
 
-import com.yyatsiuk.api.core.dto.ProductDto;
+import com.yyatsiuk.api.core.models.dto.ProductDto;
 
 import java.util.List;
 

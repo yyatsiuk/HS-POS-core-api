@@ -1,10 +1,10 @@
 package com.yyatsiuk.api.core.web.controllers;
 
-import com.yyatsiuk.api.core.dto.ProductDto;
-import com.yyatsiuk.api.core.mappers.ProductMapper;
+import com.yyatsiuk.api.core.models.dto.ProductDto;
+import com.yyatsiuk.api.core.models.mappers.ProductMapper;
 import com.yyatsiuk.api.core.service.ProductService;
-import com.yyatsiuk.api.core.web.request.ProductCreateRequest;
-import com.yyatsiuk.api.core.web.request.ProductUpdateRequest;
+import com.yyatsiuk.api.core.models.request.ProductCreateRequest;
+import com.yyatsiuk.api.core.models.request.ProductUpdateRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;

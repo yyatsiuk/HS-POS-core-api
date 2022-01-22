@@ -1,9 +1,9 @@
-package com.yyatsiuk.api.core.mappers;
+package com.yyatsiuk.api.core.models.mappers;
 
-import com.yyatsiuk.api.core.dto.ProductDto;
-import com.yyatsiuk.api.core.entities.Product;
-import com.yyatsiuk.api.core.web.request.ProductCreateRequest;
-import com.yyatsiuk.api.core.web.request.ProductUpdateRequest;
+import com.yyatsiuk.api.core.models.dto.ProductDto;
+import com.yyatsiuk.api.core.models.entities.Product;
+import com.yyatsiuk.api.core.models.request.ProductCreateRequest;
+import com.yyatsiuk.api.core.models.request.ProductUpdateRequest;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

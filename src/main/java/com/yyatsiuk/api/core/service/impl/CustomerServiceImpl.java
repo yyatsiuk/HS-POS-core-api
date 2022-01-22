@@ -1,9 +1,9 @@
 package com.yyatsiuk.api.core.service.impl;
 
-import com.yyatsiuk.api.core.dto.CustomerDto;
-import com.yyatsiuk.api.core.entities.Customer;
+import com.yyatsiuk.api.core.models.dto.CustomerDto;
+import com.yyatsiuk.api.core.models.entities.Customer;
 import com.yyatsiuk.api.core.exceptions.EntityNotFoundException;
-import com.yyatsiuk.api.core.mappers.CustomerMapper;
+import com.yyatsiuk.api.core.models.mappers.CustomerMapper;
 import com.yyatsiuk.api.core.repository.CustomerRepository;
 import com.yyatsiuk.api.core.service.CustomerService;
 import lombok.RequiredArgsConstructor;

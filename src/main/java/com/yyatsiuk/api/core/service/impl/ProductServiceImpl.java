@@ -1,10 +1,10 @@
 package com.yyatsiuk.api.core.service.impl;
 
-import com.yyatsiuk.api.core.dto.ProductDto;
-import com.yyatsiuk.api.core.entities.Product;
-import com.yyatsiuk.api.core.entities.ProductCategory;
+import com.yyatsiuk.api.core.models.dto.ProductDto;
+import com.yyatsiuk.api.core.models.entities.Product;
+import com.yyatsiuk.api.core.models.entities.ProductCategory;
 import com.yyatsiuk.api.core.exceptions.EntityNotFoundException;
-import com.yyatsiuk.api.core.mappers.ProductMapper;
+import com.yyatsiuk.api.core.models.mappers.ProductMapper;
 import com.yyatsiuk.api.core.repository.ProductCategoryRepository;
 import com.yyatsiuk.api.core.repository.ProductRepository;
 import com.yyatsiuk.api.core.service.ProductService;
@@ -15,8 +15,8 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.yyatsiuk.api.core.entities.Product.CODE_LENGTH;
-import static com.yyatsiuk.api.core.utils.hash.CodeGenerator.generateRandomCode;
+import static com.yyatsiuk.api.core.models.entities.Product.CODE_LENGTH;
+import static com.yyatsiuk.api.core.utils.CodeGenerator.generateRandomCode;
 
 @Service
 public class ProductServiceImpl implements ProductService {

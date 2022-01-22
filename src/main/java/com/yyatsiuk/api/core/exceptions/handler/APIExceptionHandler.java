@@ -1,8 +1,8 @@
-package com.yyatsiuk.api.core.web.handler;
+package com.yyatsiuk.api.core.exceptions.handler;
 
 import com.yyatsiuk.api.core.enumerations.ResponseStatus;
 import com.yyatsiuk.api.core.exceptions.EntityNotFoundException;
-import com.yyatsiuk.api.core.web.response.Response;
+import com.yyatsiuk.api.core.models.response.Response;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpHeaders;

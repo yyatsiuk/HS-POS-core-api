@@ -1,6 +1,6 @@
 package com.yyatsiuk.api.core.repository;
 
-import com.yyatsiuk.api.core.entities.ProductCategory;
+import com.yyatsiuk.api.core.models.entities.ProductCategory;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

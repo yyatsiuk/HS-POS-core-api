@@ -1,4 +1,4 @@
-package com.yyatsiuk.api.core.web.request;
+package com.yyatsiuk.api.core.models.request;
 
 import lombok.Getter;
 import lombok.Setter;

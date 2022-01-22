@@ -1,4 +1,4 @@
-package com.yyatsiuk.api.core.utils.image;
+package com.yyatsiuk.api.core.utils;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

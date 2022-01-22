@@ -1,9 +1,9 @@
 package com.yyatsiuk.api.core.web.controllers;
 
 import com.yyatsiuk.api.core.enumerations.ImageType;
-import com.yyatsiuk.api.core.utils.image.ThumbnailGenerator;
+import com.yyatsiuk.api.core.utils.ThumbnailGenerator;
 import com.yyatsiuk.api.core.service.S3Service;
-import com.yyatsiuk.api.core.web.response.ImageResponse;
+import com.yyatsiuk.api.core.models.response.ImageResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
