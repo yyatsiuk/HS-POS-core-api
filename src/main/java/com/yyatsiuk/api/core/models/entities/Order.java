@@ -7,8 +7,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.AttributeOverride;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -52,17 +54,17 @@ public class Order {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @Column(name = "branch_number", nullable = false)
-    private Integer branchNumber;
+    @Embedded
+    @AttributeOverride(name = "branchNumber", column = @Column(name = "branch_number"))
+    @AttributeOverride(name = "trackingCode", column = @Column(name = "tracking_code"))
+    private DeliveryInformation deliveryInformation;
 
-    @Column(name = "address", nullable = false)
-    private String address;
+    @ManyToOne
+    @JoinColumn(name = "courier_id", nullable = false)
+    private Courier courier;
 
     @Column(name = "discount_amount", precision = 19, scale = 2)
     private BigDecimal discountAmount;
-
-    @Column(name = "tracking_code")
-    private String trackingCode;
 
     @Column(name = "payment_status")
     private String paymentStatus;
@@ -73,10 +75,6 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
-
-    @ManyToOne
-    @JoinColumn(name = "courier_id", nullable = false)
-    private Courier courier;
 
     @PrePersist
     void prePersist() {
