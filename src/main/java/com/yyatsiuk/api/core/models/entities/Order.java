@@ -1,16 +1,15 @@
 package com.yyatsiuk.api.core.models.entities;
 
 import com.yyatsiuk.api.core.enumerations.OrderStatus;
+import com.yyatsiuk.api.core.enumerations.PaymentStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.AttributeOverride;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -20,6 +19,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -44,37 +44,33 @@ public class Order {
     @OneToMany(mappedBy = "order", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<OrderProduct> orders;
 
+    @ManyToOne
+    @JoinColumn(name = "customer_id", nullable = false)
+    private Customer customer;
+
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "delivery_information_id")
+    private DeliveryInformation deliveryInformation;
+
+    @Column(name = "discount_amount", precision = 19, scale = 2)
+    private BigDecimal discountAmount;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "payment_status")
+    private PaymentStatus paymentStatus;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private OrderStatus status;
+
+    @Column(name = "note", length = 500)
+    private String note;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-
-    @Embedded
-    @AttributeOverride(name = "branchNumber", column = @Column(name = "branch_number"))
-    @AttributeOverride(name = "trackingCode", column = @Column(name = "tracking_code"))
-    private DeliveryInformation deliveryInformation;
-
-    @ManyToOne
-    @JoinColumn(name = "courier_id", nullable = false)
-    private Courier courier;
-
-    @Column(name = "discount_amount", precision = 19, scale = 2)
-    private BigDecimal discountAmount;
-
-    @Column(name = "payment_status")
-    private String paymentStatus;
-
-    @Column(name = "note", length = 500)
-    private String note;
-
-    @ManyToOne
-    @JoinColumn(name = "customer_id", nullable = false)
-    private Customer customer;
 
     @PrePersist
     void prePersist() {
