@@ -16,13 +16,13 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
 
-@Table(name = "customers")
 @Entity
 @Builder
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "customers")
 public class Customer {
 
     @Id
@@ -46,6 +46,8 @@ public class Customer {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+
 
     @PrePersist
     void prePersist() {
