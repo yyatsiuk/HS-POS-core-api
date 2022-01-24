@@ -9,9 +9,11 @@ import com.yyatsiuk.api.core.models.entities.DeliveryInformation;
 import com.yyatsiuk.api.core.models.entities.LineItem;
 import com.yyatsiuk.api.core.models.entities.Order;
 import com.yyatsiuk.api.core.models.entities.Product;
+import com.yyatsiuk.api.core.models.mappers.OrderMapper;
 import com.yyatsiuk.api.core.models.request.LineItemRequest;
 import com.yyatsiuk.api.core.models.request.OrderCreateRequest;
 import com.yyatsiuk.api.core.repository.CourierRepository;
+import com.yyatsiuk.api.core.repository.CustomerRepository;
 import com.yyatsiuk.api.core.repository.DeliveryInformationRepository;
 import com.yyatsiuk.api.core.repository.OrderRepository;
 import com.yyatsiuk.api.core.repository.ProductRepository;
@@ -33,20 +35,26 @@ public class OrderServiceImpl implements OrderService {
     private final DeliveryInformationRepository deliveryInformationRepository;
     private final ProductRepository productRepository;
     private final CourierRepository courierRepository;
+    private final CustomerRepository customerRepository;
+    private final OrderMapper orderMapper;
 
     public OrderServiceImpl(OrderRepository orderRepository,
                             DeliveryInformationRepository deliveryInformationRepository,
                             ProductRepository productRepository,
-                            CourierRepository courierRepository) {
+                            CourierRepository courierRepository,
+                            CustomerRepository customerRepository, OrderMapper orderMapper) {
         this.orderRepository = orderRepository;
         this.deliveryInformationRepository = deliveryInformationRepository;
         this.productRepository = productRepository;
         this.courierRepository = courierRepository;
+        this.customerRepository = customerRepository;
+        this.orderMapper = orderMapper;
     }
 
     @Transactional
     @Override
     public OrderDto save(OrderCreateRequest orderCreateRequest) {
+        Customer customer = customerRepository.getById(orderCreateRequest.getCustomerId());
         Courier courier = courierRepository.findByName(orderCreateRequest.getCourier()).orElseThrow(EntityNotFoundException::new);
 
         DeliveryInformation deliveryInformation = new DeliveryInformation();
@@ -57,12 +65,12 @@ public class OrderServiceImpl implements OrderService {
         DeliveryInformation savedDeliveryInfo = deliveryInformationRepository.save(deliveryInformation);
 
         Order order = new Order();
-        order.setCustomer(new Customer(orderCreateRequest.getCustomerId()));
+        order.setCustomer(customer);
         order.setDeliveryInformation(savedDeliveryInfo);
         order.setPrepaymentAmount(order.getPrepaymentAmount() == null ? BigDecimal.ZERO : order.getPrepaymentAmount());
         order.setPaymentStatus(PaymentStatus.UNPAID);
         order.setStatus(OrderStatus.PLACED);
-        order.setNote(order.getNote());
+        order.setNote(orderCreateRequest.getNotes());
 
         Map<Long, Product> products = getProducts(orderCreateRequest);
         List<LineItem> lineItems = toLineItems(orderCreateRequest, order, products);
@@ -71,7 +79,7 @@ public class OrderServiceImpl implements OrderService {
 
         orderRepository.save(order);
 
-        return new OrderDto();
+        return orderMapper.fromEntityToDto(order);
     }
 
     private Map<Long, Product> getProducts(OrderCreateRequest orderCreateRequest) {

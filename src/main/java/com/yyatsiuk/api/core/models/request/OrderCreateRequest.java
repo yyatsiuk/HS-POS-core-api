@@ -16,5 +16,6 @@ public class OrderCreateRequest {
     private String courier;
     private String branchNumber;
     private BigDecimal prepaymentAmount;
+    private String notes;
 
 }
