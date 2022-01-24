@@ -2,9 +2,9 @@ package com.yyatsiuk.api.core.controllers;
 
 import com.yyatsiuk.api.core.models.dto.ProductDto;
 import com.yyatsiuk.api.core.models.mappers.ProductMapper;
-import com.yyatsiuk.api.core.service.ProductService;
 import com.yyatsiuk.api.core.models.request.ProductCreateRequest;
 import com.yyatsiuk.api.core.models.request.ProductUpdateRequest;
+import com.yyatsiuk.api.core.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -57,7 +57,7 @@ public class ProductController {
 
     @GetMapping
     public ResponseEntity<List<ProductDto>> getAllProducts() {
-        return ResponseEntity.ok(productService.getAll());
+        return ResponseEntity.ok(productService.findAll());
     }
 
     @GetMapping("/{id}")
@@ -73,7 +73,7 @@ public class ProductController {
 
     @GetMapping("/categories")
     public ResponseEntity<List<String>> getAllCategories() {
-        return ResponseEntity.ok(productService.getAllCategories());
+        return ResponseEntity.ok(productService.findAllCategories());
     }
 
 }

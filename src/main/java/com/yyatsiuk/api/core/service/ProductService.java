@@ -12,9 +12,9 @@ public interface ProductService {
 
     ProductDto findById(Long id);
 
-    List<ProductDto> getAll();
+    List<ProductDto> findAll();
 
-    List<String> getAllCategories();
+    List<String> findAllCategories();
 
     void delete(Long id);
 

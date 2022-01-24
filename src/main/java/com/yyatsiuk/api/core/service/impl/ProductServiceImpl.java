@@ -65,7 +65,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDto> getAll() {
+    public List<ProductDto> findAll() {
         return productRepository.findAll()
                 .stream()
                 .map(productMapper::fromEntityToDto)
@@ -73,7 +73,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<String> getAllCategories() {
+    public List<String> findAllCategories() {
         Iterable<ProductCategory> allCategories = productCategoryRepository.findAll();
         List<String> categories = new ArrayList<>();
         allCategories.forEach(category -> categories.add(category.getName()));

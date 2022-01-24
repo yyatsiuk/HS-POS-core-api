@@ -12,7 +12,7 @@ public interface CustomerService {
 
     CustomerDto findById(Long id);
 
-    List<CustomerDto> getAll();
+    List<CustomerDto> findAll();
 
     void delete(Long id);
 

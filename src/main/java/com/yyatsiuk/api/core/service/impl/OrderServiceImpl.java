@@ -82,6 +82,14 @@ public class OrderServiceImpl implements OrderService {
         return orderMapper.fromEntityToDto(order);
     }
 
+    @Override
+    public List<OrderDto> findAll() {
+        return orderRepository.findAll()
+                .stream()
+                .map(orderMapper::fromEntityToDto)
+                .toList();
+    }
+
     private Map<Long, Product> getProducts(OrderCreateRequest orderCreateRequest) {
         return productRepository.findAllByIdIn(orderCreateRequest.getItems()
                         .stream()
