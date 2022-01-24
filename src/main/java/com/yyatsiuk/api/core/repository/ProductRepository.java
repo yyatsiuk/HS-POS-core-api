@@ -13,4 +13,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @EntityGraph(type = EntityGraph.EntityGraphType.FETCH, attributePaths = "category")
     List<Product> findAll();
 
+    @EntityGraph(type = EntityGraph.EntityGraphType.FETCH, attributePaths = "category")
+    List<Product> findAllByIdIn(List<Long> ids);
+
 }

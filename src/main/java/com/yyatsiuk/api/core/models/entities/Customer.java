@@ -53,6 +53,10 @@ public class Customer {
     @OneToMany(mappedBy = "customer")
     private List<Order> orders;
 
+    public Customer(Long id) {
+        this.id = id;
+    }
+
     @PrePersist
     void prePersist() {
         this.createdAt = LocalDateTime.now();

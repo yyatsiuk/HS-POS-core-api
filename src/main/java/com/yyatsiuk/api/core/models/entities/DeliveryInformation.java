@@ -25,13 +25,13 @@ public class DeliveryInformation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Long id;
 
     @Column(name = "address", nullable = false)
     private String address;
 
     @Column(name = "branch_number", nullable = false)
-    private Integer branchNumber;
+    private String branchNumber;
 
     @Column(name = "tracking_code")
     private String trackingCode;

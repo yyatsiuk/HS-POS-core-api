@@ -25,6 +25,7 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -42,7 +43,10 @@ public class Order {
     private Long id;
 
     @OneToMany(mappedBy = "order", orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<OrderProduct> orders;
+    private List<LineItem> items = new ArrayList<>();
+
+    @Column(name = "prepayment_amount", precision = 19, scale = 2)
+    private BigDecimal prepaymentAmount;
 
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
@@ -51,9 +55,6 @@ public class Order {
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "delivery_information_id")
     private DeliveryInformation deliveryInformation;
-
-    @Column(name = "discount_amount", precision = 19, scale = 2)
-    private BigDecimal discountAmount;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "payment_status")

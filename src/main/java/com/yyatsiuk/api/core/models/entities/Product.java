@@ -1,7 +1,9 @@
 package com.yyatsiuk.api.core.models.entities;
 
 import com.yyatsiuk.api.core.enumerations.ProductStatus;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.CascadeType;
@@ -26,6 +28,8 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "products")
 public class Product {
 
@@ -65,7 +69,7 @@ public class Product {
     private ProductCategory category;
 
     @OneToMany(mappedBy = "product", orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<OrderProduct> products;
+    private List<LineItem> products;
 
     @PrePersist
     private void prePersist() {

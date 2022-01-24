@@ -12,6 +12,7 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.Table;
+import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
@@ -19,11 +20,11 @@ import java.util.Objects;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "order_product")
-public class OrderProduct {
+@Table(name = "line_item")
+public class LineItem {
 
     @EmbeddedId
-    private OrderProductId id;
+    private LineItemId id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("orderId")
@@ -36,11 +37,22 @@ public class OrderProduct {
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
 
+    @Column(name = "discount_amount", precision = 19, scale = 2)
+    private BigDecimal discountAmount;
+
+    public LineItem(Order order, Product product, Integer quantity, BigDecimal discountAmount) {
+        this.order = order;
+        this.product = product;
+        this.quantity = quantity;
+        this.discountAmount = discountAmount;
+        this.id = new LineItemId(order.getId(), product.getId());
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        OrderProduct that = (OrderProduct) o;
+        LineItem that = (LineItem) o;
         return Objects.equals(order, that.order) && Objects.equals(product, that.product);
     }
 
