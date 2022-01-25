@@ -42,6 +42,7 @@ public abstract class OrderMapperDecorator implements OrderMapper {
     private List<LineItemDto> getItemDtoList(List<LineItem> items) {
         return items.stream().map(item -> {
             LineItemDto lineItemDto = new LineItemDto();
+            lineItemDto.setName(item.getProduct().getName());
             lineItemDto.setCode(item.getProduct().getCode());
             lineItemDto.setImageUrl(item.getProduct().getImageUrl());
             lineItemDto.setQuantity(item.getQuantity());

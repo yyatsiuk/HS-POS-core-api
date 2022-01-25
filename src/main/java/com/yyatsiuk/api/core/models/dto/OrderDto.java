@@ -17,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 public class OrderDto {
 
-    private Long id;
+    private String id;
     private List<LineItemDto> lineItems;
     private BigDecimal prepaymentAmount;
     private BigDecimal subtotalAmount;

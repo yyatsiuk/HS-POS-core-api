@@ -2,6 +2,7 @@ package com.yyatsiuk.api.core.service.impl;
 
 import com.yyatsiuk.api.core.enumerations.OrderStatus;
 import com.yyatsiuk.api.core.enumerations.PaymentStatus;
+import com.yyatsiuk.api.core.exceptions.EntityNotFoundException;
 import com.yyatsiuk.api.core.models.dto.OrderDto;
 import com.yyatsiuk.api.core.models.entities.Courier;
 import com.yyatsiuk.api.core.models.entities.Customer;
@@ -21,7 +22,6 @@ import com.yyatsiuk.api.core.service.OrderService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
@@ -88,6 +88,13 @@ public class OrderServiceImpl implements OrderService {
                 .stream()
                 .map(orderMapper::fromEntityToDto)
                 .toList();
+    }
+
+    @Override
+    public OrderDto findById(Long id) {
+        return orderRepository.findById(id)
+                .map(orderMapper::fromEntityToDto)
+                .orElseThrow(() -> new EntityNotFoundException("Product with id: {0} not found", id));
     }
 
     private Map<Long, Product> getProducts(OrderCreateRequest orderCreateRequest) {
