@@ -48,8 +48,8 @@ public abstract class OrderMapperDecorator implements OrderMapper {
             lineItemDto.setQuantity(item.getQuantity());
             lineItemDto.setDiscountAmount(item.getDiscountAmount());
 
-            BigDecimal unitAmount = item.getProduct().getPrice().multiply(BigDecimal.valueOf(item.getQuantity()));
-            BigDecimal totalAmount = unitAmount.subtract(item.getDiscountAmount());
+            BigDecimal unitAmount = item.getProduct().getPrice();
+            BigDecimal totalAmount = unitAmount.multiply(BigDecimal.valueOf(item.getQuantity()));
             lineItemDto.setUnitAmount(unitAmount);
             lineItemDto.setTotalAmount(totalAmount);
 
