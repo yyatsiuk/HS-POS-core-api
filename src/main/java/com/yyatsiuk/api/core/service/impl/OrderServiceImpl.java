@@ -97,6 +97,11 @@ public class OrderServiceImpl implements OrderService {
                 .orElseThrow(() -> new EntityNotFoundException("Product with id: {0} not found", id));
     }
 
+    @Override
+    public void deleteById(Long id) {
+        orderRepository.deleteById(id);
+    }
+
     private Map<Long, Product> getProducts(OrderCreateRequest orderCreateRequest) {
         return productRepository.findAllByIdIn(orderCreateRequest.getItems()
                         .stream()

@@ -5,6 +5,7 @@ import com.yyatsiuk.api.core.models.request.OrderCreateRequest;
 import com.yyatsiuk.api.core.service.OrderService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,9 +27,10 @@ public class OrderController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createOrder(@RequestBody OrderCreateRequest payload) {
-        orderService.save(payload);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<OrderDto> createOrder(@RequestBody OrderCreateRequest payload) {
+        OrderDto newOrder = orderService.save(payload);
+
+        return ResponseEntity.ok(newOrder);
     }
 
     @GetMapping
@@ -40,6 +42,13 @@ public class OrderController {
     @GetMapping("/{id}")
     public ResponseEntity<OrderDto> getOrderById(@PathVariable Long id) {
         return ResponseEntity.ok(orderService.findById(id));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
+        orderService.deleteById(id);
+
+        return ResponseEntity.noContent().build();
     }
 
 }

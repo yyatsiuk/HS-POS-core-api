@@ -13,4 +13,5 @@ public interface OrderService {
 
     OrderDto findById(Long id);
 
+    void deleteById(Long id);
 }
