@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class LineItemDto {
 
+    private Long productId;
     private String name;
     private String imageUrl;
     private Integer quantity;

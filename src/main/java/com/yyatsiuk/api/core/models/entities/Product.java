@@ -68,7 +68,7 @@ public class Product {
     @JoinColumn(name = "category_id")
     private ProductCategory category;
 
-    @OneToMany(mappedBy = "product", orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product")
     private List<LineItem> products;
 
     @PrePersist

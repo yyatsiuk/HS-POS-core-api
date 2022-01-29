@@ -31,6 +31,8 @@ import java.util.stream.Collectors;
 @Service
 public class OrderServiceImpl implements OrderService {
 
+    private static final String ORDER_NOT_FOUND_MESSAGE = "Order with id: {0} not found";
+
     private final OrderRepository orderRepository;
     private final DeliveryInformationRepository deliveryInformationRepository;
     private final ProductRepository productRepository;
@@ -67,13 +69,14 @@ public class OrderServiceImpl implements OrderService {
         Order order = new Order();
         order.setCustomer(customer);
         order.setDeliveryInformation(savedDeliveryInfo);
-        order.setPrepaymentAmount(order.getPrepaymentAmount() == null ? BigDecimal.ZERO : order.getPrepaymentAmount());
+        order.setPrepaymentAmount(orderCreateRequest.getPrepaymentAmount() == null ? BigDecimal.ZERO : orderCreateRequest.getPrepaymentAmount());
         order.setPaymentStatus(PaymentStatus.UNPAID);
         order.setStatus(OrderStatus.PLACED);
         order.setNote(orderCreateRequest.getNotes());
 
-        Map<Long, Product> products = getProducts(orderCreateRequest);
-        List<LineItem> lineItems = toLineItems(orderCreateRequest, order, products);
+        List<LineItemRequest> items = orderCreateRequest.getItems();
+        Map<Long, Product> products = getProducts(items);
+        List<LineItem> lineItems = toLineItems(items, order, products);
 
         order.setItems(lineItems);
 
@@ -82,6 +85,7 @@ public class OrderServiceImpl implements OrderService {
         return orderMapper.fromEntityToDto(order);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<OrderDto> findAll() {
         return orderRepository.findAll()
@@ -90,11 +94,12 @@ public class OrderServiceImpl implements OrderService {
                 .toList();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public OrderDto findById(Long id) {
         return orderRepository.findById(id)
                 .map(orderMapper::fromEntityToDto)
-                .orElseThrow(() -> new EntityNotFoundException("Product with id: {0} not found", id));
+                .orElseThrow(() -> new EntityNotFoundException(ORDER_NOT_FOUND_MESSAGE, id));
     }
 
     @Override
@@ -102,8 +107,39 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.deleteById(id);
     }
 
-    private Map<Long, Product> getProducts(OrderCreateRequest orderCreateRequest) {
-        return productRepository.findAllByIdIn(orderCreateRequest.getItems()
+    @Override
+    public void updateStatus(Long id, OrderStatus status) {
+        Order order = orderRepository.findById(id).
+                orElseThrow(() -> new EntityNotFoundException(ORDER_NOT_FOUND_MESSAGE, id));
+
+        order.setStatus(status);
+        orderRepository.save(order);
+    }
+
+    @Override
+    public void updatePaymentStatus(Long id, PaymentStatus paymentStatus) {
+        Order order = orderRepository.findById(id).
+                orElseThrow(() -> new EntityNotFoundException(ORDER_NOT_FOUND_MESSAGE, id));
+
+        order.setPaymentStatus(paymentStatus);
+        orderRepository.save(order);
+    }
+
+    @Override
+    public void updateOrderItems(Long id, List<LineItemRequest> items) {
+        Order order = orderRepository.findById(id).
+                orElseThrow(() -> new EntityNotFoundException(ORDER_NOT_FOUND_MESSAGE, id));
+
+        Map<Long, Product> products = getProducts(items);
+        List<LineItem> lineItems = toLineItems(items, order, products);
+
+        order.getItems().clear();
+        order.getItems().addAll(lineItems);
+        orderRepository.save(order);
+    }
+
+    private Map<Long, Product> getProducts(List<LineItemRequest> lineItems) {
+        return productRepository.findAllByIdIn(lineItems
                         .stream()
                         .map(LineItemRequest::getProductId)
                         .toList())
@@ -111,9 +147,8 @@ public class OrderServiceImpl implements OrderService {
                 .collect(Collectors.toMap(Product::getId, Function.identity()));
     }
 
-    private List<LineItem> toLineItems(OrderCreateRequest orderCreateRequest, Order order, Map<Long, Product> products) {
-        return orderCreateRequest
-                .getItems()
+    private List<LineItem> toLineItems(List<LineItemRequest> lineItems, Order order, Map<Long, Product> products) {
+        return lineItems
                 .stream()
                 .map(item -> {
                     Product product = products.get(item.getProductId());

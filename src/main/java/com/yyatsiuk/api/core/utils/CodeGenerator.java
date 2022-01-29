@@ -31,7 +31,7 @@ public class CodeGenerator {
         StringBuilder code = new StringBuilder();
         final RandomGenerator generator = RandomGenerator.getDefault();
 
-        IntStream.generate(() -> generator.nextInt(hexHash.length() + 1))
+        IntStream.generate(() -> generator.nextInt(hexHash.length()))
                 .limit(length)
                 .forEach(index -> code.append(hexHash.charAt(index)));
 

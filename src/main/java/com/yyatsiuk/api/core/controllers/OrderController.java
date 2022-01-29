@@ -1,12 +1,17 @@
 package com.yyatsiuk.api.core.controllers;
 
+import com.yyatsiuk.api.core.enumerations.OrderStatus;
+import com.yyatsiuk.api.core.enumerations.PaymentStatus;
 import com.yyatsiuk.api.core.models.dto.OrderDto;
 import com.yyatsiuk.api.core.models.request.OrderCreateRequest;
+import com.yyatsiuk.api.core.models.request.OrderPartialUpdateRequest;
 import com.yyatsiuk.api.core.service.OrderService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -49,6 +54,26 @@ public class OrderController {
         orderService.deleteById(id);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Void> partialUpdate(@PathVariable Long id, @RequestBody OrderPartialUpdateRequest payload) {
+        OrderStatus status = payload.getStatus();
+        PaymentStatus paymentStatus = payload.getPaymentStatus();
+
+        if (status != null) {
+            orderService.updateStatus(id, status);
+        }
+
+        if (paymentStatus != null) {
+            orderService.updatePaymentStatus(id, paymentStatus);
+        }
+
+        if (payload.getItems() != null) {
+            orderService.updateOrderItems(id, payload.getItems());
+        }
+
+        return ResponseEntity.ok().build();
     }
 
 }
