@@ -108,25 +108,25 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void updateStatus(Long id, OrderStatus status) {
+    public OrderDto updateStatus(Long id, OrderStatus status) {
         Order order = orderRepository.findById(id).
                 orElseThrow(() -> new EntityNotFoundException(ORDER_NOT_FOUND_MESSAGE, id));
 
         order.setStatus(status);
-        orderRepository.save(order);
+        return orderMapper.fromEntityToDto(orderRepository.save(order));
     }
 
     @Override
-    public void updatePaymentStatus(Long id, PaymentStatus paymentStatus) {
+    public OrderDto updatePaymentStatus(Long id, PaymentStatus paymentStatus) {
         Order order = orderRepository.findById(id).
                 orElseThrow(() -> new EntityNotFoundException(ORDER_NOT_FOUND_MESSAGE, id));
 
         order.setPaymentStatus(paymentStatus);
-        orderRepository.save(order);
+        return orderMapper.fromEntityToDto(orderRepository.save(order));
     }
 
     @Override
-    public void updateOrderItems(Long id, List<LineItemRequest> items) {
+    public OrderDto updateOrderItems(Long id, List<LineItemRequest> items) {
         Order order = orderRepository.findById(id).
                 orElseThrow(() -> new EntityNotFoundException(ORDER_NOT_FOUND_MESSAGE, id));
 
@@ -135,7 +135,7 @@ public class OrderServiceImpl implements OrderService {
 
         order.getItems().clear();
         order.getItems().addAll(lineItems);
-        orderRepository.save(order);
+        return orderMapper.fromEntityToDto(orderRepository.save(order));
     }
 
     private Map<Long, Product> getProducts(List<LineItemRequest> lineItems) {

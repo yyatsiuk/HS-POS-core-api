@@ -7,7 +7,6 @@ import com.yyatsiuk.api.core.models.request.OrderCreateRequest;
 import com.yyatsiuk.api.core.models.request.OrderPartialUpdateRequest;
 import com.yyatsiuk.api.core.service.OrderService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -57,23 +56,24 @@ public class OrderController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Void> partialUpdate(@PathVariable Long id, @RequestBody OrderPartialUpdateRequest payload) {
+    public ResponseEntity<OrderDto> partialUpdate(@PathVariable Long id, @RequestBody OrderPartialUpdateRequest payload) {
         OrderStatus status = payload.getStatus();
         PaymentStatus paymentStatus = payload.getPaymentStatus();
 
         if (status != null) {
-            orderService.updateStatus(id, status);
+            return ResponseEntity.ok(orderService.updateStatus(id, status));
         }
 
         if (paymentStatus != null) {
-            orderService.updatePaymentStatus(id, paymentStatus);
+            return ResponseEntity.ok(orderService.updatePaymentStatus(id, paymentStatus));
         }
 
         if (payload.getItems() != null) {
-            orderService.updateOrderItems(id, payload.getItems());
+            OrderDto orderDto = orderService.updateOrderItems(id, payload.getItems());
+            return ResponseEntity.ok(orderDto);
         }
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.badRequest().build();
     }
 
 }

@@ -18,10 +18,10 @@ public interface OrderService {
 
     void deleteById(Long id);
 
-    void updateStatus(Long id, OrderStatus status);
+    OrderDto updateStatus(Long id, OrderStatus status);
 
-    void updatePaymentStatus(Long id, PaymentStatus paymentStatus);
+    OrderDto updatePaymentStatus(Long id, PaymentStatus paymentStatus);
 
-    void updateOrderItems(Long id, List<LineItemRequest> items);
+    OrderDto updateOrderItems(Long id, List<LineItemRequest> items);
 
 }
