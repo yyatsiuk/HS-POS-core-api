@@ -1,10 +1,11 @@
 package com.yyatsiuk.api.core.controllers;
 
 import com.yyatsiuk.api.core.models.dto.CustomerDto;
+import com.yyatsiuk.api.core.models.dto.OrderDto;
 import com.yyatsiuk.api.core.models.mappers.CustomerMapper;
-import com.yyatsiuk.api.core.service.CustomerService;
 import com.yyatsiuk.api.core.models.request.CustomerCreateRequest;
 import com.yyatsiuk.api.core.models.request.CustomerUpdateRequest;
+import com.yyatsiuk.api.core.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -63,6 +64,12 @@ public class CustomerController {
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         customerService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}/orders")
+    public ResponseEntity<List<OrderDto>> getCustomerOrders(@PathVariable Long id) {
+        List<OrderDto> orders = customerService.findAllOrders(id);
+        return ResponseEntity.ok(orders);
     }
 
 }

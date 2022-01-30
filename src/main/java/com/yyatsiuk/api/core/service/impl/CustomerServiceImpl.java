@@ -1,9 +1,12 @@
 package com.yyatsiuk.api.core.service.impl;
 
-import com.yyatsiuk.api.core.models.dto.CustomerDto;
-import com.yyatsiuk.api.core.models.entities.Customer;
 import com.yyatsiuk.api.core.exceptions.EntityNotFoundException;
+import com.yyatsiuk.api.core.models.dto.CustomerDto;
+import com.yyatsiuk.api.core.models.dto.OrderDto;
+import com.yyatsiuk.api.core.models.entities.Customer;
+import com.yyatsiuk.api.core.models.entities.Order;
 import com.yyatsiuk.api.core.models.mappers.CustomerMapper;
+import com.yyatsiuk.api.core.models.mappers.OrderMapper;
 import com.yyatsiuk.api.core.repository.CustomerRepository;
 import com.yyatsiuk.api.core.service.CustomerService;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +25,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerRepository;
     private final CustomerMapper customerMapper;
+    private final OrderMapper orderMapper;
 
     @Override
     public Long save(CustomerDto customerDto) {
@@ -55,6 +59,16 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public void delete(Long id) {
         customerRepository.deleteById(id);
+    }
+
+    @Override
+    public List<OrderDto> findAllOrders(Long id) {
+        Customer customer = customerRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Customer with id: {0} not found", id));
+        List<Order> orders = customer.getOrders();
+
+
+        return orders.stream().map(orderMapper::fromEntityToDto).toList();
     }
 
 }
