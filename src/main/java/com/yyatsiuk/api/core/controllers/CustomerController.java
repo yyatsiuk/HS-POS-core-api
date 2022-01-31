@@ -1,6 +1,7 @@
 package com.yyatsiuk.api.core.controllers;
 
 import com.yyatsiuk.api.core.models.dto.CustomerDto;
+import com.yyatsiuk.api.core.models.dto.CustomerNoteDto;
 import com.yyatsiuk.api.core.models.dto.OrderDto;
 import com.yyatsiuk.api.core.models.mappers.CustomerMapper;
 import com.yyatsiuk.api.core.models.request.CustomerCreateRequest;
@@ -70,6 +71,11 @@ public class CustomerController {
     public ResponseEntity<List<OrderDto>> getCustomerOrders(@PathVariable Long id) {
         List<OrderDto> orders = customerService.findAllOrders(id);
         return ResponseEntity.ok(orders);
+    }
+
+    @GetMapping("/{id}/notes")
+    public ResponseEntity<List<CustomerNoteDto>> getCustomerNotes() {
+        return ResponseEntity.ok(List.of(new CustomerNoteDto()));
     }
 
 }
