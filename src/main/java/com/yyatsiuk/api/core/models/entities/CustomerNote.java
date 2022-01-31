@@ -1,6 +1,7 @@
 package com.yyatsiuk.api.core.models.entities;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,38 +14,44 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
+@Builder
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "delivery_information")
-public class DeliveryInformation {
+@Table(name = "customer_note")
+public class CustomerNote {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "address", nullable = false)
-    private String address;
+    @Column(name = "note", nullable = false, length = 500)
+    private String note;
 
-    @Column(name = "branch_number", nullable = false)
-    private String branchNumber;
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt;
 
-    @Column(name = "tracking_code")
-    private String trackingCode;
+    @Column(name = "updated_at", nullable = false)
+    private LocalDateTime updatedAt;
 
     @ManyToOne
-    @JoinColumn(name = "courier_id", nullable = false)
-    private Courier courier;
+    @JoinColumn(name = "customer_id", nullable = false)
+    private Customer customer;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        DeliveryInformation that = (DeliveryInformation) o;
+        CustomerNote that = (CustomerNote) o;
         return Objects.equals(id, that.id);
     }
 

@@ -25,24 +25,24 @@ import java.util.Objects;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "customers")
-public class Customer {
+@Table(name = "users")
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "email")
+    private String email;
+
     @Column(name = "full_name")
     private String fullName;
 
-    @Column(name = "instagram")
-    private String instagram;
+    @Column(name = "avatar_url")
+    private String avatarUrl;
 
-    @Column(name = "address")
-    private String address;
-
-    @Column(name = "phone")
-    private String phone;
+    @Column(name = "position")
+    private String position;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -50,24 +50,17 @@ public class Customer {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "customer")
-    private List<Order> orders;
-
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "user")
     private List<CustomerNote> notes;
 
-    public Customer(Long id) {
-        this.id = id;
-    }
-
     @PrePersist
-    void prePersist() {
+    private void prePersist() {
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
     }
 
     @PreUpdate
-    void preUpdate() {
+    private void preUpdate() {
         this.updatedAt = LocalDateTime.now();
     }
 
@@ -75,8 +68,8 @@ public class Customer {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Customer customer = (Customer) o;
-        return Objects.equals(id, customer.id);
+        User user = (User) o;
+        return Objects.equals(id, user.id);
     }
 
     @Override
