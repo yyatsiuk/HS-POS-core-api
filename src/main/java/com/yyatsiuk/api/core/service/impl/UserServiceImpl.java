@@ -25,4 +25,9 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
+    @Override
+    public UserDto update(UserDto userDto) {
+        return new UserDto();
+    }
+
 }

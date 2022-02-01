@@ -8,4 +8,6 @@ public interface UserService {
 
     Long save(UserDto userDto);
 
+    UserDto update(UserDto userDto);
+
 }
