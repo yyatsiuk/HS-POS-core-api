@@ -11,11 +11,17 @@ import java.util.List;
 public class OrderCreateRequest {
 
     private Long customerId;
+
     private List<LineItemRequest> items;
+
     private String address;
+
     private String courier;
+
     private String branchNumber;
+
     private BigDecimal prepaymentAmount;
+
     private String notes;
 
 }

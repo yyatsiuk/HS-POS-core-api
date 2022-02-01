@@ -10,7 +10,9 @@ import java.math.BigDecimal;
 public class LineItemRequest {
 
     private Long productId;
+
     private Integer quantity;
+
     private BigDecimal discountAmount;
 
 }
