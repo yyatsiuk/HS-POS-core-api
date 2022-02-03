@@ -52,4 +52,16 @@ public class APIExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.notFound().build();
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<Response> handleEntityNotFoundException(final RuntimeException ex) {
+        log.info(ex.getMessage());
+        return ResponseEntity.badRequest().build();
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Response> handleEntityNotFoundException(final Exception ex) {
+        log.info(ex.getMessage(), ex);
+        return ResponseEntity.internalServerError().build();
+    }
+
 }
