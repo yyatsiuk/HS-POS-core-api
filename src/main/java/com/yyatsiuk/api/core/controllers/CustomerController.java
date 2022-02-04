@@ -75,7 +75,7 @@ public class CustomerController {
     }
 
     @GetMapping("/{id}/notes")
-    public ResponseEntity<List<CustomerNoteDto>> getCustomerNotes() {
+    public ResponseEntity<List<CustomerNoteDto>> getCustomerNotes(@PathVariable String id) {
         return ResponseEntity.ok(List.of(new CustomerNoteDto()));
     }
 
