@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -31,7 +32,7 @@ public class OrderController {
     }
 
     @PostMapping
-    public ResponseEntity<OrderDto> createOrder(@RequestBody OrderCreateRequest payload) {
+    public ResponseEntity<OrderDto> createOrder(@Valid @RequestBody OrderCreateRequest payload) {
         OrderDto newOrder = orderService.save(payload);
 
         return ResponseEntity.ok(newOrder);
@@ -56,7 +57,8 @@ public class OrderController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<OrderDto> partialUpdate(@PathVariable Long id, @RequestBody OrderPartialUpdateRequest payload) {
+    public ResponseEntity<OrderDto> partialUpdate(@PathVariable Long id,
+                                                  @Valid @RequestBody OrderPartialUpdateRequest payload) {
         OrderStatus status = payload.getStatus();
         PaymentStatus paymentStatus = payload.getPaymentStatus();
 

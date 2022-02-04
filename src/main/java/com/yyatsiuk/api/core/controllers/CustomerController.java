@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class CustomerController {
     private final CustomerService customerService;
 
     @PostMapping
-    public ResponseEntity<Void> createCustomer(@RequestBody CustomerCreateRequest payload, HttpServletRequest req) {
+    public ResponseEntity<Void> createCustomer(@Valid @RequestBody CustomerCreateRequest payload, HttpServletRequest req) {
         Long id = customerService.save(customerMapper.fromCreateRequestToDto(payload));
         return ResponseEntity.created(URI.create(req.getRequestURL()
                         .append("/")
@@ -44,7 +45,7 @@ public class CustomerController {
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<CustomerDto> updateCustomer(@RequestBody CustomerUpdateRequest payload,
+    public ResponseEntity<CustomerDto> updateCustomer(@Valid @RequestBody CustomerUpdateRequest payload,
                                                       @PathVariable Long id) {
 
         CustomerDto dto = customerMapper.fromUpdateRequestToDto(payload, id);
