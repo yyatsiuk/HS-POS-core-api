@@ -30,8 +30,8 @@ public class CustomerNote {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "note", nullable = false, length = 500)
-    private String note;
+    @Column(name = "content", nullable = false, length = 500)
+    private String content;
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
