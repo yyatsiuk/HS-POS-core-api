@@ -7,7 +7,6 @@ import com.yyatsiuk.api.core.models.request.OrderCreateRequest;
 import com.yyatsiuk.api.core.models.request.OrderPartialUpdateRequest;
 import com.yyatsiuk.api.core.service.OrderService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;

@@ -13,7 +13,6 @@ import com.yyatsiuk.api.core.models.mappers.OrderMapper;
 import com.yyatsiuk.api.core.repository.CustomerNoteRepository;
 import com.yyatsiuk.api.core.repository.CustomerRepository;
 import com.yyatsiuk.api.core.service.CustomerService;
-import com.yyatsiuk.api.core.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

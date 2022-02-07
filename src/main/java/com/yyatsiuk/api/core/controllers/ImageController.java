@@ -1,13 +1,12 @@
 package com.yyatsiuk.api.core.controllers;
 
 import com.yyatsiuk.api.core.enumerations.ImageType;
-import com.yyatsiuk.api.core.utils.ThumbnailGenerator;
-import com.yyatsiuk.api.core.service.S3Service;
 import com.yyatsiuk.api.core.models.response.ImageResponse;
+import com.yyatsiuk.api.core.service.S3Service;
+import com.yyatsiuk.api.core.utils.ThumbnailGenerator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;

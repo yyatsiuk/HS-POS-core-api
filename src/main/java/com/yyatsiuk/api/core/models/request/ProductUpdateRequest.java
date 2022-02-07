@@ -1,6 +1,5 @@
 package com.yyatsiuk.api.core.models.request;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yyatsiuk.api.core.enumerations.ProductStatus;
 import lombok.Getter;
 import lombok.Setter;
