@@ -1,6 +1,7 @@
 package com.yyatsiuk.api.core.models.mappers;
 
 import com.yyatsiuk.api.core.models.dto.CustomerDto;
+import com.yyatsiuk.api.core.models.dto.CustomerNoteDto;
 import com.yyatsiuk.api.core.models.entities.Customer;
 import com.yyatsiuk.api.core.models.request.CustomerCreateRequest;
 import com.yyatsiuk.api.core.models.request.CustomerUpdateRequest;

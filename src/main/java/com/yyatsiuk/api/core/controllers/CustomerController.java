@@ -5,11 +5,11 @@ import com.yyatsiuk.api.core.models.dto.CustomerNoteDto;
 import com.yyatsiuk.api.core.models.dto.OrderDto;
 import com.yyatsiuk.api.core.models.mappers.CustomerMapper;
 import com.yyatsiuk.api.core.models.request.CustomerCreateRequest;
+import com.yyatsiuk.api.core.models.request.CustomerNoteRequest;
 import com.yyatsiuk.api.core.models.request.CustomerUpdateRequest;
 import com.yyatsiuk.api.core.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,7 +27,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/customers")
 @RequiredArgsConstructor
-@CrossOrigin("*")
 public class CustomerController {
 
     private final CustomerMapper customerMapper;
@@ -75,8 +74,23 @@ public class CustomerController {
     }
 
     @GetMapping("/{id}/notes")
-    public ResponseEntity<List<CustomerNoteDto>> getCustomerNotes(@PathVariable String id) {
-        return ResponseEntity.ok(List.of(new CustomerNoteDto()));
+    public ResponseEntity<List<CustomerNoteDto>> getCustomerNotes(@PathVariable Long id) {
+        return ResponseEntity.ok(customerService.findCustomerNotesById(id));
+    }
+
+    @PostMapping("/{id}/notes")
+    public ResponseEntity<CustomerNoteDto> createCustomerNote(@PathVariable Long id,
+                                                              @RequestBody CustomerNoteRequest payload) {
+
+        return ResponseEntity.ok(customerService.createCustomerNote(id, payload.getSenderId(), payload.getContent()));
+    }
+
+    @DeleteMapping("/{customerId}/notes/{noteId}")
+    public ResponseEntity<Void> deleteCustomerNote(@PathVariable Long customerId,
+                                                   @PathVariable Long noteId) {
+
+        customerService.deleteCustomerNote(customerId, noteId);
+        return ResponseEntity.ok().build();
     }
 
 }

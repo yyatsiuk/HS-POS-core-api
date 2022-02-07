@@ -25,7 +25,6 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/api/products")
-@CrossOrigin("*")
 public class ProductController {
 
     private final ProductService productService;

@@ -6,7 +6,6 @@ import com.yyatsiuk.api.core.models.request.UserCreateRequest;
 import com.yyatsiuk.api.core.models.request.UserUpdateRequest;
 import com.yyatsiuk.api.core.service.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +18,6 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/users")
-@CrossOrigin("*")
 public class UserController {
 
     private final UserService userService;

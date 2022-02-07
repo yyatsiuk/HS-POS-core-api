@@ -16,7 +16,7 @@ public class CustomerNoteDto {
     private Long id;
     private String content;
     private LocalDateTime createdAt;
-    private String senderAvatarUrl;
+    private String senderAvatar;
     private Long senderId;
     private String senderName;
 
