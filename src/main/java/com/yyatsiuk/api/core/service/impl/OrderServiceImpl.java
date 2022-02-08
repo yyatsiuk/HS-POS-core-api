@@ -70,7 +70,7 @@ public class OrderServiceImpl implements OrderService {
         order.setCustomer(customer);
         order.setDeliveryInformation(savedDeliveryInfo);
         order.setPrepaymentAmount(orderCreateRequest.getPrepaymentAmount() == null ? BigDecimal.ZERO : orderCreateRequest.getPrepaymentAmount());
-        order.setPaymentStatus(PaymentStatus.UNPAID);
+        order.setPaymentStatus(definePaymentStatus(order.getPrepaymentAmount()));
         order.setStatus(OrderStatus.PLACED);
         order.setNote(orderCreateRequest.getNotes());
 
@@ -154,6 +154,10 @@ public class OrderServiceImpl implements OrderService {
                     Product product = products.get(item.getProductId());
                     return new LineItem(order, product, item.getQuantity(), item.getDiscountAmount());
                 }).collect(Collectors.toList());
+    }
+
+    private PaymentStatus definePaymentStatus(BigDecimal prepaymentAmount) {
+        return prepaymentAmount.compareTo(BigDecimal.ZERO) > 0 ? PaymentStatus.PREPAYMENT : PaymentStatus.UNPAID;
     }
 
 }
