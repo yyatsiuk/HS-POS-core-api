@@ -19,6 +19,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -53,9 +55,22 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerDto findById(Long id) {
-        return customerRepository.findById(id)
-                .map(customerMapper::fromEntityToDto)
+        Customer customer = customerRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Customer with id: {0} not found", id));
+
+        List<Order> customerOrders = customer.getOrders();
+        BigDecimal purchasesAmount = customerOrders
+                .stream()
+                .map(Order::getItems)
+                .flatMap(Collection::stream)
+                .map(lineItem -> lineItem.getProduct().getPrice().multiply(BigDecimal.valueOf(lineItem.getQuantity())))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        CustomerDto customerDto = customerMapper.fromEntityToDto(customer);
+        customerDto.setPurchasesAmount(purchasesAmount);
+        customerDto.setPurchasesNumber(customerOrders.size());
+
+        return customerDto;
     }
 
     @Override
