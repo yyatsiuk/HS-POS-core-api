@@ -29,6 +29,7 @@ public class OrderDto {
     private String courier;
     private String branchNumber;
     private String trackingCode;
+    private String note;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
