@@ -5,6 +5,7 @@ import com.yyatsiuk.api.core.enumerations.PaymentStatus;
 import com.yyatsiuk.api.core.models.dto.OrderDto;
 import com.yyatsiuk.api.core.models.request.OrderCreateRequest;
 import com.yyatsiuk.api.core.models.request.OrderPartialUpdateRequest;
+import com.yyatsiuk.api.core.models.request.OrderUpdateRequest;
 import com.yyatsiuk.api.core.service.OrderService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,6 +36,12 @@ public class OrderController {
         OrderDto newOrder = orderService.save(payload);
 
         return ResponseEntity.ok(newOrder);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<OrderDto> updateOrder(@Valid @RequestBody OrderUpdateRequest payload) {
+//        orderService.update()
+        return ResponseEntity.ok(new OrderDto());
     }
 
     @GetMapping
