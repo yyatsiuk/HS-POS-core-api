@@ -5,6 +5,7 @@ import com.yyatsiuk.api.core.enumerations.PaymentStatus;
 import com.yyatsiuk.api.core.models.dto.OrderDto;
 import com.yyatsiuk.api.core.models.request.LineItemRequest;
 import com.yyatsiuk.api.core.models.request.OrderCreateRequest;
+import com.yyatsiuk.api.core.models.request.OrderUpdateRequest;
 
 import java.util.List;
 
@@ -23,5 +24,7 @@ public interface OrderService {
     OrderDto updatePaymentStatus(Long id, PaymentStatus paymentStatus);
 
     OrderDto updateOrderItems(Long id, List<LineItemRequest> items);
+
+    void update(OrderUpdateRequest payload);
 
 }

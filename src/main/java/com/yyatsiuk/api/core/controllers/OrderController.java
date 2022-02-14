@@ -40,7 +40,7 @@ public class OrderController {
 
     @PutMapping("/{id}")
     public ResponseEntity<OrderDto> updateOrder(@Valid @RequestBody OrderUpdateRequest payload) {
-//        orderService.update()
+        orderService.update(payload);
         return ResponseEntity.ok(new OrderDto());
     }
 
