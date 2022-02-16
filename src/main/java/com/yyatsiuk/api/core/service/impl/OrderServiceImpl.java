@@ -13,6 +13,7 @@ import com.yyatsiuk.api.core.models.entities.Product;
 import com.yyatsiuk.api.core.models.mappers.OrderMapper;
 import com.yyatsiuk.api.core.models.request.LineItemRequest;
 import com.yyatsiuk.api.core.models.request.OrderCreateRequest;
+import com.yyatsiuk.api.core.models.request.OrderUpdateRequest;
 import com.yyatsiuk.api.core.repository.CourierRepository;
 import com.yyatsiuk.api.core.repository.CustomerRepository;
 import com.yyatsiuk.api.core.repository.DeliveryInformationRepository;
@@ -63,6 +64,7 @@ public class OrderServiceImpl implements OrderService {
         deliveryInformation.setAddress(orderCreateRequest.getAddress());
         deliveryInformation.setCourier(courier);
         deliveryInformation.setBranchNumber(orderCreateRequest.getBranchNumber());
+        deliveryInformation.setPhone(orderCreateRequest.getPhone());
 
         DeliveryInformation savedDeliveryInfo = deliveryInformationRepository.save(deliveryInformation);
 
@@ -72,7 +74,7 @@ public class OrderServiceImpl implements OrderService {
         order.setPrepaymentAmount(orderCreateRequest.getPrepaymentAmount() == null ? BigDecimal.ZERO : orderCreateRequest.getPrepaymentAmount());
         order.setPaymentStatus(definePaymentStatus(order.getPrepaymentAmount()));
         order.setStatus(OrderStatus.PLACED);
-        order.setNote(orderCreateRequest.getNotes());
+        order.setNote(orderCreateRequest.getNote());
 
         List<LineItemRequest> items = orderCreateRequest.getItems();
         Map<Long, Product> products = getProducts(items);
@@ -136,6 +138,18 @@ public class OrderServiceImpl implements OrderService {
         order.getItems().clear();
         order.getItems().addAll(lineItems);
         return orderMapper.fromEntityToDto(orderRepository.save(order));
+    }
+
+    @Override
+    public OrderDto update(Long id, OrderUpdateRequest payload) {
+        Order order = orderRepository.findById(id).
+                orElseThrow(() -> new EntityNotFoundException(ORDER_NOT_FOUND_MESSAGE, id));
+
+        order.setStatus(payload.getStatus());
+        order.setNote(payload.getNotes());
+//        order.getDeliveryInformation().
+
+        return new OrderDto();
     }
 
     private Map<Long, Product> getProducts(List<LineItemRequest> lineItems) {

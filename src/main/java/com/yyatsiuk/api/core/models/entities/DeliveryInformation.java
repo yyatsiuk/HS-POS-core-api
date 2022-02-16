@@ -36,6 +36,9 @@ public class DeliveryInformation {
     @Column(name = "tracking_code")
     private String trackingCode;
 
+    @Column(name = "phone")
+    private String phone;
+
     @ManyToOne
     @JoinColumn(name = "courier_id", nullable = false)
     private Courier courier;

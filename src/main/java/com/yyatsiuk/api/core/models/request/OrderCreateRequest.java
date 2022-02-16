@@ -21,6 +21,9 @@ public class OrderCreateRequest {
     @NotEmpty(message = "Address must not be null or empty")
     private String address;
 
+    @NotEmpty(message = "Phone must not be null or empty")
+    private String phone;
+
     @NotEmpty(message = "Courier must not be null or empty")
     private String courier;
 
@@ -29,6 +32,6 @@ public class OrderCreateRequest {
 
     private BigDecimal prepaymentAmount;
 
-    private String notes;
+    private String note;
 
 }

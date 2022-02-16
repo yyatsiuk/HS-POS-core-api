@@ -26,6 +26,7 @@ public class OrderDto {
     private OrderStatus status;
     private PaymentStatus paymentStatus;
     private String address;
+    private String phone;
     private String courier;
     private String branchNumber;
     private String trackingCode;

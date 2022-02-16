@@ -35,6 +35,7 @@ public abstract class OrderMapperDecorator implements OrderMapper {
         orderDto.setAddress(entity.getDeliveryInformation().getAddress());
         orderDto.setCourier(entity.getDeliveryInformation().getCourier().getName());
         orderDto.setTrackingCode(entity.getDeliveryInformation().getTrackingCode());
+        orderDto.setPhone(entity.getDeliveryInformation().getPhone());
 
         return orderDto;
     }

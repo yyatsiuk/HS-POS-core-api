@@ -25,6 +25,6 @@ public interface OrderService {
 
     OrderDto updateOrderItems(Long id, List<LineItemRequest> items);
 
-    void update(OrderUpdateRequest payload);
+    OrderDto update(Long id, OrderUpdateRequest payload);
 
 }

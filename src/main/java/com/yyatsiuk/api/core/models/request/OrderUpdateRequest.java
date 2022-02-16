@@ -1,10 +1,14 @@
 package com.yyatsiuk.api.core.models.request;
 
 import com.yyatsiuk.api.core.enumerations.OrderStatus;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+@Getter
+@Setter
 public class OrderUpdateRequest {
 
     @NotEmpty(message = "Address must not be null or empty")
