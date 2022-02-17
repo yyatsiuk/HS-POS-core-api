@@ -35,6 +35,10 @@ public class Courier {
     @Column(name = "min_delivery_price", nullable = false, precision = 19, scale = 2)
     private BigDecimal minDeliveryPrice;
 
+    public Courier(String name) {
+        this.name = name;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

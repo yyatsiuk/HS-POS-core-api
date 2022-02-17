@@ -147,9 +147,11 @@ public class OrderServiceImpl implements OrderService {
 
         order.setStatus(payload.getStatus());
         order.setNote(payload.getNotes());
-//        order.getDeliveryInformation().
+        order.getDeliveryInformation().setPhone(payload.getPhone());
+        order.getDeliveryInformation().setBranchNumber(payload.getBranchNumber());
+        order.getDeliveryInformation().setCourier(new Courier(payload.getCourier()));
 
-        return new OrderDto();
+        return orderMapper.fromEntityToDto(orderRepository.save(order));
     }
 
     private Map<Long, Product> getProducts(List<LineItemRequest> lineItems) {
