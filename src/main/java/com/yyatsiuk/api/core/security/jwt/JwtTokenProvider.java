@@ -22,9 +22,16 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+
 @Component
 @Slf4j
 public class JwtTokenProvider {
+
+    private static final String BEARER_TOKEN_PATTERN = "Bearer ";
+    private static final String EMPTY_CREDENTIALS = "";
+    private static final String CLAIM_EMAIL = "email";
+    private static final String CLAIM_ROLE = "role";
 
 
     @Value("${jwt.hmac.secret}")
@@ -52,8 +59,8 @@ public class JwtTokenProvider {
 
         Claims claims = Jwts.claims()
                 .setSubject(String.valueOf(id));
-        claims.put("roles", roles);
-        claims.put("email", email);
+        claims.put(CLAIM_ROLE, roles);
+        claims.put(CLAIM_EMAIL, email);
 
         Date now = new Date();
         Date validity = new Date(now.getTime() + 3600000 * 24);
@@ -70,7 +77,7 @@ public class JwtTokenProvider {
         UserDetails userDetails = userDetailsService
                 .loadUserByUsername(getUsername(token));
 
-        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+        return new UsernamePasswordAuthenticationToken(userDetails, EMPTY_CREDENTIALS, userDetails.getAuthorities());
     }
 
     private String getUsername(String token) {
@@ -78,14 +85,14 @@ public class JwtTokenProvider {
                 .setSigningKey(secret)
                 .parseClaimsJws(token)
                 .getBody();
-        return (String) claims.get("email");
+        return (String) claims.get(CLAIM_EMAIL);
     }
 
     String resolveToken(HttpServletRequest req) {
-        String bearerToken = req.getHeader("Authorization");
+        String bearerToken = req.getHeader(AUTHORIZATION);
 
-        if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
-            return bearerToken.substring(7);
+        if (bearerToken != null && bearerToken.startsWith(BEARER_TOKEN_PATTERN)) {
+            return bearerToken.substring(BEARER_TOKEN_PATTERN.length());
         }
 
         return null;
